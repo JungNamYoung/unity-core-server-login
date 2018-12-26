@@ -26,7 +26,7 @@ namespace DotnetCoreServer.Models
 
             Console.WriteLine(query);
 
-            using(MySqlConnection conn = db.GetConnection())
+            using(MySqlConnection conn = db.GetMySqlConnection())
             using(MySqlCommand cmd = (MySqlCommand)conn.CreateCommand())
             {
 

@@ -3,25 +3,28 @@ using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Configuration;
 public interface IDB
 {
-        MySqlConnection GetConnection();
+        MySqlConnection GetMySqlConnection();
 }
 
 public class DB : IDB
 {
     public string ConnectionString;
 
-    public DB(IConfiguration configuration){
+    public DB(IConfiguration configuration)
+    {
         this.ConnectionString = configuration.GetConnectionString("DefaultConnection");
     }
     
-    public MySqlConnection GetConnection()
+    public MySqlConnection GetMySqlConnection()
     {
-        MySqlConnection connection = new MySqlConnection
+        MySqlConnection tMySqlConnection = new MySqlConnection
         {
             ConnectionString = this.ConnectionString
         };
-        connection.Open();
-        return connection;
+
+        tMySqlConnection.Open();
+
+        return tMySqlConnection;
     }
 
 }

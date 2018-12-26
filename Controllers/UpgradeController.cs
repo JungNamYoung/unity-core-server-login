@@ -10,7 +10,6 @@ namespace DotnetCoreServer.Controllers
     [Route("[controller]/[action]")]
     public class UpgradeController : Controller
     {
-
         IUpgradeDao upgradeDao;
         IUserDao userDao;
 
@@ -42,6 +41,7 @@ namespace DotnetCoreServer.Controllers
 
             User user = this.userDao.GetUser(request.UserID);
             UpgradeData upgradeInfo = null;
+            
             if("Health".Equals(request.UpgradeType)){
                 upgradeInfo = this.upgradeDao.GetUpgradeInfo(request.UpgradeType, user.HealthLevel + 1);
             }else if("Damage".Equals(request.UpgradeType)){

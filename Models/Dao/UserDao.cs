@@ -20,9 +20,11 @@ namespace DotnetCoreServer.Models
             this.db = db;
         }
 
-        public User FindUserByFUID(string FacebookID){
+        public User FindUserByFUID(string FacebookID)
+        {
             User user = new User();
-            using(MySqlConnection conn = db.GetConnection())
+
+            using(MySqlConnection tMySqlConnection = db.GetMySqlConnection())
             {   
                 string query = String.Format(
                     "SELECT user_id, facebook_id, facebook_name, facebook_photo_url, point, created_at, access_token FROM tb_user WHERE facebook_id = '{0}'",
@@ -30,7 +32,7 @@ namespace DotnetCoreServer.Models
 
                 Console.WriteLine(query);
 
-                using(MySqlCommand cmd = (MySqlCommand)conn.CreateCommand())
+                using(MySqlCommand cmd = (MySqlCommand)tMySqlConnection.CreateCommand())
                 {
                     cmd.CommandText = query;
                     using (MySqlDataReader reader = (MySqlDataReader)cmd.ExecuteReader())
@@ -48,27 +50,22 @@ namespace DotnetCoreServer.Models
                         }
                     }
                 }
-                conn.Close();
+                tMySqlConnection.Close();
             }
             return null;
         }
         
         public User GetUser(long UserID){
             User user = new User();
-            using(MySqlConnection conn = db.GetConnection())
+
+            using(MySqlConnection conn = db.GetMySqlConnection())
             {   
-                string query = String.Format(
-                    @"
-                    SELECT 
-                        user_id, facebook_id, facebook_name, 
-                        facebook_photo_url, point, created_at, 
-                        access_token, diamond, health, defense, damage,
-                        speed, health_level, defense_level, 
-                        damage_level, speed_level,
-                        level, experience
-                    FROM tb_user 
-                    WHERE user_id = {0}",
-                     UserID);
+                // string query = String.Format(
+                //      @"
+                //     "SELECT user_id, facebook_id, facebook_name, facebook_photo_url, point, created_at, access_token, diamond, health, defense, damage, speed, health_level, defense_level, damage_level, speed_level,level, experience FROM tb_user  WHERE user_id = {0}", UserID);
+
+                string query = String.Format("SELECT user_id, facebook_id, facebook_name, facebook_photo_url, point, created_at, access_token, diamond, health, defense, damage, speed, health_level, defense_level, damage_level, speed_level,level, experience FROM tb_user  WHERE user_id = {0}", UserID);
+
 
                 Console.WriteLine(query);
 
@@ -116,7 +113,7 @@ namespace DotnetCoreServer.Models
 
             Console.WriteLine(query);
 
-            using(MySqlConnection conn = db.GetConnection())
+            using(MySqlConnection conn = db.GetMySqlConnection())
             using(MySqlCommand cmd = (MySqlCommand)conn.CreateCommand())
             {
 
@@ -131,7 +128,7 @@ namespace DotnetCoreServer.Models
         }
 
         public bool UpdateUser(User user){
-            using(MySqlConnection conn = db.GetConnection())
+            using(MySqlConnection conn = db.GetMySqlConnection())
             {
                 string query = String.Format(
                     @"

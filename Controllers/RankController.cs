@@ -20,7 +20,6 @@ namespace DotnetCoreServer.Controllers
         [HttpGet]
         public RankResult Total(int Start, int Count)
         {
-
             RankResult result = new RankResult();
             
             List<RankUser> list = rankDao.TotalRank(Start, Count);
@@ -38,7 +37,6 @@ namespace DotnetCoreServer.Controllers
         [HttpPost]
         public RankResult Friend([FromBody] RankRequest rankRequest)
         {
-
             RankResult result = new RankResult();
             
             List<RankUser> list = rankDao.FriendRank(rankRequest.UserID, rankRequest.FriendList);
